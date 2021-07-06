@@ -17,6 +17,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioAttributes;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -592,6 +594,10 @@ public class RNPushNotificationHelper {
                     PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "myApp:notificationLock");
                     wl.acquire(5000); //set your time in milliseconds
                 }
+                if (!bundle.containsKey("playSound") || bundle.getBoolean("playSound")) {
+                    MediaPlayer.create(context,
+                            getSoundUri(bundle.getString("soundName"))).start();
+                }
             }
 
             // Can't use setRepeating for recurring notifications because setRepeating
@@ -668,7 +674,7 @@ public class RNPushNotificationHelper {
 
     private Uri getSoundUri(String soundName) {
         if (soundName == null || "default".equalsIgnoreCase(soundName)) {
-            return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         } else {
 
             // sound name can be full filename, or just the resource name.
