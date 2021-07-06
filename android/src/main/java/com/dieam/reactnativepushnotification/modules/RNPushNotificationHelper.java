@@ -18,7 +18,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
-import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -674,7 +673,7 @@ public class RNPushNotificationHelper {
 
     private Uri getSoundUri(String soundName) {
         if (soundName == null || "default".equalsIgnoreCase(soundName)) {
-            return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         } else {
 
             // sound name can be full filename, or just the resource name.
