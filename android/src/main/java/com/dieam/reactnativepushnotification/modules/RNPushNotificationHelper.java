@@ -590,7 +590,7 @@ public class RNPushNotificationHelper {
                 boolean isScreenOn = Build.VERSION.SDK_INT >= 20 ? pm.isInteractive() : pm.isScreenOn(); // check if screen is on
                 if (!isScreenOn) {
                     PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "myApp:notificationLock");
-                    wl.acquire(3000); //set your time in milliseconds
+                    wl.acquire(5000); //set your time in milliseconds
                 }
             }
 
