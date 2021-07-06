@@ -21,6 +21,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 import androidx.core.app.RemoteInput;
@@ -584,6 +585,12 @@ public class RNPushNotificationHelper {
                     notificationManager.notify(tag, notificationID, info);
                 } else {
                     notificationManager.notify(notificationID, info);
+                }
+                PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                boolean isScreenOn = Build.VERSION.SDK_INT >= 20 ? pm.isInteractive() : pm.isScreenOn(); // check if screen is on
+                if (!isScreenOn) {
+                    PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "myApp:notificationLock");
+                    wl.acquire(3000); //set your time in milliseconds
                 }
             }
 
